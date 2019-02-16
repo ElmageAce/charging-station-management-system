@@ -11,10 +11,4 @@
 |
 */
 
-Route::get('/{path?}', function () {
-    return view('home');
-});
-
-Route::get('/{path?}/{subPath?}', function () {
-    return view('home');
-});
+Route::get('/{path?}/{subPath?}', 'HomeController@home');
