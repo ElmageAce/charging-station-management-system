@@ -26,7 +26,7 @@ const AddNewCompanyRow = (props) => {
     return (
         <li className="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
             <form onSubmit={handleSubmit}>
-                <input className="form-control" value={companyName} onChange={onChangeInput}/>
+                <input className="form-control" value={companyName} onChange={onChangeInput} placeholder={"Company name"}/>
                 {hasError && <small className="text-danger">Please enter correct company name!</small>}
             </form>
             <button className="btn btn-success btn-sm" onClick={handleSubmit}>
