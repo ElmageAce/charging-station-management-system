@@ -2,6 +2,6 @@
 
 cd laradock
 
-docker-compose up -d nginx mariadb phpmyadmin redis workspace elasticsearch
+docker-compose stop
 
 cd ..
