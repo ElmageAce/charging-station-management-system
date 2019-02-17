@@ -6,7 +6,6 @@ export default (state = initialState, action) => {
         case types.COMPANY_SHOW_REQUEST:
             return {...state, is_fetching: true}
         case types.COMPANY_SHOW_SUCCESS:
-            console.log(action.data)
             return {...initialState, company: action.data}
         case types.COMPANY_SHOW_FAILURE:
             return {...initialState, error: action.error}

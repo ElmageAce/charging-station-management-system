@@ -8,12 +8,10 @@ export default (state = initialState, action) => {
         case types.COMPANY_STATIONS_INDEX_REQUEST:
             return {...state, is_fetching: true}
         case types.COMPANY_STATIONS_INDEX_SUCCESS:
-            console.log(action.data)
             return {...initialState, paginated_list: action.data}
         case types.COMPANY_STATIONS_INDEX_FAILURE:
             return {...initialState, error: action.error}
         case updateTypes.STATION_UPDATE_SUCCESS:
-            console.log(action.data)
             return {
                 ...state,
                 paginated_list: {

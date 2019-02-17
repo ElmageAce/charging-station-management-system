@@ -9,7 +9,6 @@ export const sendCompanyShowRequest = (id) => dispatch => {
     dispatch(createShowRequestAction())
     const callbacks = {
         success: (data) => dispatch => {
-            console.log('inio', data)
             dispatch(createShowSuccessAction(data))
         },
         failure: createShowFailureAction

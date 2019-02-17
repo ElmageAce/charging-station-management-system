@@ -7,12 +7,10 @@ export default (state = initialState, action) => {
         case types.STATIONS_SEARCH_REQUEST:
             return {...state, is_fetching: true}
         case types.STATIONS_SEARCH_SUCCESS:
-            console.log(action.data)
             return {...initialState, paginated_list: action.data}
         case types.STATIONS_SEARCH_FAILURE:
             return {...initialState, error: action.error}
         case updateTypes.STATION_UPDATE_SUCCESS:
-            console.log(action.data)
             return {
                 ...state,
                 paginated_list: {

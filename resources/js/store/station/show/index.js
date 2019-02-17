@@ -6,7 +6,6 @@ export default (state = initialState, action) => {
         case types.STATION_SHOW_REQUEST:
             return {...state, is_fetching: true}
         case types.STATION_SHOW_SUCCESS:
-            console.log(action.data)
             return {...initialState, station: action.data}
         case types.STATION_SHOW_FAILURE:
             return {...initialState, error: action.error}

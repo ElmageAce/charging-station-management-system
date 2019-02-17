@@ -7,7 +7,6 @@ import Marker from '../../../ui/Marker'
 
 class Show extends Component {
     render() {
-        console.log(this.props.station)
         return (
             <Container>
                 <div className="card">
