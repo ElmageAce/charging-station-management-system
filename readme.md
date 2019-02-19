@@ -21,8 +21,7 @@ For executing the application simply run `./run.sh` it will run following contai
   - workspace
   - phpmyadmin
   
-Or you can simply navigate to `laradock` folder and run following command to run containers, migrate the database, and 
-compile front-end components:
+Or you can simply navigate to `laradock` folder and run following command to run containers:
 
 ```bash
 # Create valid .env file for laradock
@@ -32,7 +31,7 @@ cp -rf .env.docker .env
 docker-compose up -d nginx mariadb phpmyadmin redis workspace elasticsearch
 ```
 
-then you may load `localhost` in your web browser to load the application front-end.
+Then you may navigate to `localhost` in your web browser to load the application front-end.
 
 #### Setup
 
@@ -74,18 +73,17 @@ into the database (`php artisan db:seed --class=FakeDatabaseSeeder`) which you c
 
 ### Elasticsearch
 
-In this project, the `elasticsearch` has been used for geo-queries (find stations which are in a certain distance from
+In this project, the `elasticsearch` has been used for geo-queries (to find stations which are in a certain distance from
  a given point), so it needs to create an index for stations, the `laravel scout` and `elasticsearch` will do the rest.
 
 >Since I have used `babenkoivan/scout-elasticsearch-driver` as the driver for connecting the `laravel scout` and
-> the `elasticsearch` you may find the full documentation [here](https://packagist.org/packages/babenkoivan/scout-elasticsearch-driver) via package.
+> the `elasticsearch` you may find the full documentation [here](https://packagist.org/packages/babenkoivan/scout-elasticsearch-driver) via packagist.
 
 #### Create index
 In the `laradock` folder execute the following command:
 
 ```bash
 docker-compose exec workspace bash -c "php artisan elastic:create-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
-docker-compose exec workspace bash -c "php artisan elastic:drop-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
 ```
 
 #### Drop index
