@@ -32,6 +32,8 @@ cp -rf .env.docker .env
 docker-compose up -d nginx mariadb phpmyadmin redis workspace elasticsearch
 ```
 
+then you may load `localhost` in your web browser to load the application front-end.
+
 #### Setup
 
 After first run it needs to setup environment (such as run composer install, migrations, create elasticsearch index,
