@@ -10,26 +10,7 @@ I've used `laravel` & `react` as main backend and front-end frameworks, Data wil
 
 ### Run
 
-For executing the application simply run `./run.sh` it will run following containers:
-
-  - nginx
-  - redis
-  - php-fpm
-  - elasticsearch
-  - mariadb
-  - docker-in-docker
-  - workspace
-  - phpmyadmin
-  
-Or you can simply navigate to `laradock` folder and run following command to run containers:
-
-```bash
-# Create valid .env file for laradock
-cp -rf .env.docker .env
-
-# Run containers
-docker-compose up -d nginx mariadb phpmyadmin redis workspace elasticsearch
-```
+For executing the application simply run `docker-compose up -d`.
 
 Then you may navigate to `localhost` in your web browser to load the application front-end.
 
@@ -39,31 +20,18 @@ After first run it needs to setup environment (such as run composer install, mig
  install npm, and compile js components) It needs to run following commands:
 
 ```bash
-# Create valid laravel .env file
-cp -rf .env.docker .env
-
-# move to laradock folder
-cd laradock
-
 # Run composer install and migrate the database
-docker-compose exec workspace bash -c "composer install"
-docker-compose exec workspace bash -c "php artisan migrate"
-docker-compose exec workspace bash -c "php artisan elastic:create-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
-
-# Install npm and prepare for production
-docker-compose exec workspace bash -c "npm install"
-docker-compose exec workspace bash -c "npm run prod"
-
-# move back to main folder
-cd ..
+docker-compose exec core bash -c "composer install"
+docker-compose exec core bash -c "php artisan migrate"
+docker-compose exec core bash -c "php artisan elastic:create-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
 ```
 
 ### Seeding the database
 
-In the `laradock` folder execute the following command:
+Execute the following command:
 
 ```bash
-docker-compose exec workspace bash -c "php artisan migrate:fresh && php artisan db:seed --class=FakeDatabaseSeeder"
+docker-compose exec core bash -c "php artisan migrate:fresh && php artisan db:seed --class=FakeDatabaseSeeder"
 ```
 
 As you can see the above command first runs migrations (`php artisan migrate:fresh`) and then seeds some fake data
@@ -80,47 +48,26 @@ In this project, the `elasticsearch` has been used for geo-queries (to find stat
 > the `elasticsearch` you may find the full documentation [here](https://packagist.org/packages/babenkoivan/scout-elasticsearch-driver) via packagist.
 
 #### Create index
-In the `laradock` folder execute the following command:
+Execute the following command:
 
 ```bash
-docker-compose exec workspace bash -c "php artisan elastic:create-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
+docker-compose exec core bash -c "php artisan elastic:create-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
 ```
 
 #### Drop index
-In the `laradock` folder execute the following command:
+Execute the following command:
 
 ```bash
-docker-compose exec workspace bash -c "php artisan elastic:drop-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
+docker-compose exec core bash -c "php artisan elastic:drop-index App\\\\Elastic\\\\Configurators\\\\StationConfigurator"
 ```
-
-### Front-end
-
-To compile js (react) components run the following commands in the `laradock` folder:
-
-```bash
-# Install node modules
-docker-compose exec workspace bash -c "npm install"
-
-# Compile js components using webpack (laravel-mix)
-docker-compose exec workspace bash -c "npm run prod"
-``` 
 
 ### Test
 
-To run the unit tests in the `laradock` folder simply execute the following command:
+Simply execute the following command:
 
 ```bash
-docker-compose exec workspace bash -c "php ./vendor/phpunit/phpunit/phpunit"
+docker-compose exec core bash -c "php ./vendor/phpunit/phpunit/phpunit"
 ```
 
 >Note: it takes about 22 seconds to complete tests, because it needs to put sleep before tests which are related to `elasticsearch` 
 > in order to make sure everything is stored there successfully.
-
-### Run commands
-
-To execute any other commands, it needs to Enter the `workspace` container 
-
-```bash
-docker-compose exec workspace bash
-```
- 

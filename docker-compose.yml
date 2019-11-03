@@ -1,0 +1,43 @@
+version: "3.4"
+services:
+  core:
+    container_name: ev_core
+    build:
+      context: ./
+      dockerfile: docker/core/Dockerfile
+    depends_on:
+      - elasticsearch
+      - db
+    env_file:
+      - .env.docker
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.4
+    container_name: ev_elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  db:
+    image: mysql:8
+    container_name: ev_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 8306:3306
+    environment:
+      TZ: 'Europe/Helsinki'
+      MYSQL_ROOT_PASSWORD: localhostrootpwd
+      MYSQL_DATABASE: ev_database
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    volumes:
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
+
+#volumes:
+#  esdata1:
+#    driver: local
